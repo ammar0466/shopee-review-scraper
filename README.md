@@ -1,0 +1,45 @@
+# Shopee Review Scraper 🛍️⭐⭐⭐⭐⭐
+
+A powerful, robust Chrome Extension designed to scrape product reviews from Shopee keys, capable of extracting detailed data including anonymous reviews, high-resolution images, and direct video links.
+
+## ✨ Features
+
+- **Anonymous Review Support**: Uses smart DOM traversal to correctly attribute reviews to anonymous users (e.g., `f*****9`) without losing data.
+- **Deep Media Extraction**:
+  - **Images**: Scans for standard tags and background-image divs (common in Shopee layouts).
+  - **Videos**: Deep scans raw HTML to unearth direct `.mp4` links, even if lazy-loaded.
+- **Smart Data Cleaning**: Automatically cleans up timestamps, "Variation:" text, and junk data.
+- **Multiple Export Formats**: Export your data to **CSV**, **Excel** (HTML-based), or **JSON**.
+- **Auto-Scroll & Pagination**: Automatically handles lazy loading and clicks "Next Page" to scrape thousands of reviews.
+- **Pause/Resume Control**: Full control over the scraping process.
+
+## 🚀 Installation
+
+1.  Clone this repository or download the ZIP.
+    ```bash
+    git clone git@github.com:ammar0466/shopee-review-scraper.git
+    ```
+2.  Open Chrome and navigate to `chrome://extensions/`.
+3.  Enable **Developer Mode** (top right toggle).
+4.  Click **Load unpacked**.
+5.  Select the folder where you cloned this repository.
+
+## 📖 Usage
+
+1.  Go to any **Shopee Product Page**.
+2.  **Scroll down** until you see the "Product Ratings" section (this ensures the initial data is loaded).
+3.  Click the **Extension Icon** in your browser toolbar.
+4.  Choose your export format (CSV, Excel, or JSON).
+5.  Click **EXPORT REVIEWS**.
+6.  Sit back and watch the counter grow! You can Pause or Stop at any time.
+7.  Click **Download** when finished.
+
+## 🛠️ Technical Highlights
+
+-   **Manifest V3**: Built with the latest Chrome Extension standards.
+-   **Regex Scanning**: Implements advanced regex patterns to find masked usernames and hidden video files.
+-   **Robust DOM Traversal**: "Grandparent" traversal logic ensures accurate review text extraction even when the HTML structure varies for anonymous users.
+
+## 📝 License
+
+Values provided "as is". Created by **ammar0466**.
