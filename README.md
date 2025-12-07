@@ -43,10 +43,18 @@ A powerful, robust Chrome Extension designed to scrape product reviews from Shop
 -   **Regex Scanning**: Implements advanced regex patterns to find masked usernames and hidden video files.
 -   **Robust DOM Traversal**: "Grandparent" traversal logic ensures accurate review text extraction even when the HTML structure varies for anonymous users.
 
-## 🔮 Roadmap / Future Ideas
--   **Review Sentiment Analysis** (categorize as Positive/Neutral/Negative).
--   **Filter by Date Range** (scrape only last 30 days).
--   **Auto-Translate Reviews**.
+## 🔮 Roadmap & Status
+
+### ✅ Completed
+- [x] **Anonymous Review Support**: Full support for masked usernames.
+- [x] **Deep Media Extraction**: High-res images and direct `.mp4` video links.
+- [x] **Buyer Identity**: User Avatar and User ID extraction.
+- [x] **Export Formats**: CSV, Excel, JSON.
+
+### 🚧 Future Ideas
+- [ ] **Review Sentiment Analysis**: Categorize reviews as Positive, Neutral, or Negative.
+- [ ] **Filter by Date Range**: Option to scrape only reviews from the last X days.
+- [ ] **Auto-Translate Reviews**: Built-in translation for foreign language reviews.
 
 ## 📝 License
 
