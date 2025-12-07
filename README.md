@@ -8,6 +8,9 @@ A powerful, robust Chrome Extension designed to scrape product reviews from Shop
 - **Deep Media Extraction**:
   - **Images**: Scans for standard tags and background-image divs (common in Shopee layouts).
   - **Videos**: Deep scans raw HTML to unearth direct `.mp4` links, even if lazy-loaded.
+- **Buyer Identity Extraction**:
+  - **User ID**: Captures user profile links as identifiers.
+  - **Avatar**: Extracts user profile pictures.
 - **Smart Data Cleaning**: Automatically cleans up timestamps, "Variation:" text, and junk data.
 - **Multiple Export Formats**: Export your data to **CSV**, **Excel** (HTML-based), or **JSON**.
 - **Auto-Scroll & Pagination**: Automatically handles lazy loading and clicks "Next Page" to scrape thousands of reviews.
@@ -39,6 +42,11 @@ A powerful, robust Chrome Extension designed to scrape product reviews from Shop
 -   **Manifest V3**: Built with the latest Chrome Extension standards.
 -   **Regex Scanning**: Implements advanced regex patterns to find masked usernames and hidden video files.
 -   **Robust DOM Traversal**: "Grandparent" traversal logic ensures accurate review text extraction even when the HTML structure varies for anonymous users.
+
+## 🔮 Roadmap / Future Ideas
+-   **Review Sentiment Analysis** (categorize as Positive/Neutral/Negative).
+-   **Filter by Date Range** (scrape only last 30 days).
+-   **Auto-Translate Reviews**.
 
 ## 📝 License
 
