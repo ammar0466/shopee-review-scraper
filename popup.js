@@ -1,7 +1,7 @@
 /**
  * Popup Logic for Shopee Reviews Scraper
  */
-console.log("POPUP LOADED - DOM VERSION v5 (Syntax Fixed)");
+console.log("POPUP LOADED - DOM VERSION v6 (Slider Fixed)");
 
 // State
 let state = {
@@ -13,7 +13,8 @@ let state = {
     isScraping: false,
     isPaused: false,
     reviews: [],
-    progress: 0
+    progress: 0,
+    scrapingInterval: 2000 // Default 2s
 };
 
 // DOM Elements
@@ -42,7 +43,11 @@ const elements = {
     menuIcon: document.querySelector('.menu-icon'),
 
     fileTypeDisplay: document.getElementById('file-type-display'),
-    totalReviews: document.getElementById('total-reviews')
+    totalReviews: document.getElementById('total-reviews'),
+
+    // Slider
+    intervalSlider: document.getElementById('interval-slider'),
+    intervalLabel: document.getElementById('interval-label')
 };
 
 
@@ -112,6 +117,15 @@ function initEventListeners() {
     });
 
     elements.stopBtn.addEventListener('click', stopScraping);
+
+    // Slider Logic
+    if (elements.intervalSlider) {
+        elements.intervalSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            state.scrapingInterval = val * 1000;
+            elements.intervalLabel.textContent = `Interval: ${val} seconds`;
+        });
+    }
 }
 
 // ... Sidebar/Settings functions ...
@@ -237,7 +251,8 @@ async function startScraping() {
             }
 
             // 3. Post-navigation wait
-            await new Promise(r => setTimeout(r, 2000));
+            // Use the slider value
+            await new Promise(r => setTimeout(r, state.scrapingInterval));
         }
 
         finishScraping();
