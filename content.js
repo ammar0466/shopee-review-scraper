@@ -3,7 +3,7 @@
  * Extracts Shop ID and Item ID from the DOM
  */
 
-console.log('Shopee Scraper Content Script Loaded v13 (REGEX MP4 SCAN)');
+console.log('Shopee Scraper Content Script Loaded v14 (Variables Fixed)');
 
 function getPageIds() {
     let shopId = null;
@@ -92,10 +92,33 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             try {
                 if (el.querySelectorAll('.icon-rating-solid').length > 10) return;
 
-                // --- AUTHOR ---
-                let author = el.querySelector('.shopee-product-rating__author-name')?.innerText
-                    || el.querySelector('.InK5kS')?.innerText
-                    || el.querySelector('.author-name')?.innerText;
+                // --- AUTHOR & IDS ---
+                let authorEl = el.querySelector('.shopee-product-rating__author-name') || el.querySelector('.InK5kS') || el.querySelector('.author-name');
+                let author = authorEl?.innerText;
+
+                // 1. Buyer User ID (Profile Link)
+                let buyerUserId = '';
+                let profileLink = authorEl?.closest('a')?.getAttribute('href') || '';
+                if (profileLink) {
+                    buyerUserId = profileLink; // e.g. /username
+                }
+
+                // 2. Avatar
+                let avatarUrl = '';
+                const avatarEl = el.querySelector('.shopee-avatar__img') || el.querySelector('.shopee-product-rating__avatar img');
+                if (avatarEl) {
+                    avatarUrl = avatarEl.getAttribute('src') || '';
+                } else {
+                    // Background image fallback
+                    const avatarDiv = el.querySelector('.shopee-avatar__placeholder') || el.querySelector('.shopee-product-rating__avatar');
+                    if (avatarDiv) {
+                        const style = window.getComputedStyle(avatarDiv);
+                        const bg = style.backgroundImage;
+                        if (bg && bg.startsWith('url(')) {
+                            avatarUrl = bg.slice(4, -1).replace(/"/g, "").replace(/'/g, "");
+                        }
+                    }
+                }
 
                 if (!author) {
                     const text = el.innerText;
@@ -163,7 +186,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 el.querySelectorAll('img').forEach(img => {
                     const src = img.getAttribute('src') || img.getAttribute('data-src');
                     if (src && src.startsWith('http') && !src.includes('blank.gif')) {
-                        // Exclude obvious video thumbnails from the *Image* list
                         if (!src.includes('.vod.') && !src.includes('/video/') && !src.includes('_tn')) {
                             images.push(src);
                         }
@@ -176,7 +198,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     const bg = style.backgroundImage;
                     if (bg && bg.startsWith('url(') && bg.includes('susercontent')) {
                         let url = bg.slice(4, -1).replace(/"/g, "").replace(/'/g, "");
-                        // Only add if NOT a video thumbnail
                         if (url && !url.includes('.vod.') && !url.includes('/video/')) {
                             if (!images.includes(url)) images.push(url);
                         }
@@ -184,9 +205,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 });
 
                 // 3. NUCLEAR OPTION: Scan innerHTML for MP4s (The "Real" Video Link)
-                // This catches <video src="...">, data-src="...", data-video="...", or anything else
                 const htmlContent = el.innerHTML;
-                // Regex matches http... .mp4
                 const mp4Matches = htmlContent.match(/https?:\/\/[a-zA-Z0-9.\-_/]+\.mp4/g);
                 if (mp4Matches) {
                     mp4Matches.forEach(match => {
@@ -194,7 +213,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     });
                 }
 
-                // 4. Fallback: If no MP4 found, check for <video> tags specifically (e.g. blobs? uncommon in scraping but possible)
+                // 4. Fallback
                 if (videos.length === 0) {
                     el.querySelectorAll('video').forEach(vid => {
                         if (vid.src && vid.src.startsWith('http')) videos.push(vid.src);
