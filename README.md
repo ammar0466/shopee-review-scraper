@@ -59,3 +59,4 @@ A powerful, robust Chrome Extension designed to scrape product reviews from Shop
 ## 📝 License
 
 Values provided "as is". Created by **ammar0466**.
+For details on privacy, data handling, and policies, see the [Privacy Policy](https://ammar0466.github.io/shopee-review-scraper/privacy-policy).
